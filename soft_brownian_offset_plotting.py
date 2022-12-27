@@ -18,7 +18,7 @@ import itertools
 import numpy as np
 from sbo import soft_brownian_offset
 
-data_initial = pd.read_csv('ADFANet_Shuffled_LabelOK.csv').drop(columns=[
+data_initial = pd.read_csv('datasets/ADFANet_Shuffled_LabelOK.csv').drop(columns=[
     'label']).to_numpy()[0:500]
 n_colrow = 2
 d_min = np.linspace(.25, .45, n_colrow)
@@ -44,7 +44,7 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
     data = np.concatenate((data, data_ood))
 
     labels = np.concatenate((pd.read_csv(
-        'ADFANet_Shuffled_LabelOK.csv'
+        'datasets/ADFANet_Shuffled_LabelOK.csv'
     )[0:500].label, ['ood' for x in range(600)]))
 
     umap_2d = UMAP(n_components=2, init='random', random_state=0,
