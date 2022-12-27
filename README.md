@@ -9,6 +9,5 @@ Repo with python script to plot various things related to my thesis for Soft Bro
 - umap-learn
 - pandas
 - numpy
-- itertools
 
 
