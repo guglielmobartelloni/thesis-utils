@@ -18,8 +18,10 @@ import itertools
 import numpy as np
 from sbo import soft_brownian_offset
 
-data_initial = pd.read_csv('datasets/ADFANet_Shuffled_LabelOK.csv').drop(columns=[
-    'label']).to_numpy()[0:500]
+data_initial = pd.read_csv(
+    'datasets/ADFANet_Shuffled_LabelOK.csv'
+).drop(columns=['label']).to_numpy()[0:500]
+
 n_colrow = 2
 d_min = np.linspace(.25, .45, n_colrow)
 softness = np.linspace(0, 1, n_colrow)
@@ -27,8 +29,8 @@ softness = np.linspace(0, 1, n_colrow)
 fig = make_subplots(rows=n_colrow,
                     cols=n_colrow,
                     subplot_titles=[f"Dmin: {d_min_}, Softness: {soft_}" for (
-                        i, (d_min_, soft_)) in enumerate(itertools.product(d_min, softness))]
-                    )
+                        i, (d_min_, soft_)) in enumerate(
+                            itertools.product(d_min, softness))])
 
 transform_color = np.vectorize(lambda x: (1 if x == 'ood' else (2 if x
                                == 'normal' else 3)))
