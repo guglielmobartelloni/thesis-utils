@@ -1,0 +1,5 @@
+numpy==1.21.2
+pandas==1.5.2
+plotly==5.11.0
+sbo==1.1.0
+umap-learn==0.5.3
