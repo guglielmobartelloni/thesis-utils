@@ -20,7 +20,7 @@ from sbo import soft_brownian_offset
 
 data_initial = pd.read_csv('ADFANet_Shuffled_LabelOK.csv').drop(columns=[
     'label']).to_numpy()[0:500]
-n_colrow = 3
+n_colrow = 2
 d_min = np.linspace(.25, .45, n_colrow)
 softness = np.linspace(0, 1, n_colrow)
 
