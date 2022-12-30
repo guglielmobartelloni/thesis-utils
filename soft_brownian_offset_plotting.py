@@ -1,9 +1,6 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 
-"""Soft Brownian Offset - Plotting
-
-"""
+"""Soft Brownian Offset - Plotting"""
 
 import pandas as pd
 
@@ -18,9 +15,12 @@ import itertools
 import numpy as np
 from sbo import soft_brownian_offset
 
+n_normal_samples = 500
+n_ood_samples = 600
+
 data_initial = pd.read_csv(
     'datasets/ADFANet_Shuffled_LabelOK.csv'
-).drop(columns=['label']).to_numpy()[0:500]
+).drop(columns=['label']).to_numpy()[0:n_normal_samples]
 
 n_colrow = 2
 d_min = np.linspace(.25, .45, n_colrow)
@@ -41,13 +41,14 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
 
     data = data_initial
     data_ood = soft_brownian_offset(data, d_min_, d_off_,
-                                    softness=softness_, n_samples=600)
+                                    softness=softness_,
+                                    n_samples=n_ood_samples)
 
     data = np.concatenate((data, data_ood))
 
     labels = np.concatenate((pd.read_csv(
         'datasets/ADFANet_Shuffled_LabelOK.csv'
-    )[0:500].label, ['ood' for x in range(600)]))
+    )[0:n_normal_samples].label, ['ood' for x in range(n_ood_samples)]))
 
     umap_2d = UMAP(n_components=2, init='random', random_state=0,
                    n_neighbors=50, min_dist=.0)
