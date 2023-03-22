@@ -51,7 +51,7 @@ fig = make_subplots(rows=n_colrow,
 fig.update_layout(
     title_text=f"Total Samples: {n_normal_samples+n_ood_samples}, Normal samples: {number_of_normal_samples}, Attack samples: {number_of_attacks_samples}, OOD samples: {n_ood_samples}")
 
-# Create different colors for the labels
+# Create different colors for the labels (yellow for normal, purple for OOD)
 transform_color = np.vectorize(lambda x: (1 if x == 'ood' else (2 if x
                                == 'normal' else 3)))
 
