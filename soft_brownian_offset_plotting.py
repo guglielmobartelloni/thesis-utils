@@ -51,7 +51,7 @@ fig = make_subplots(rows=n_colrow,
 fig.update_layout(
     title_text=f"Total Samples: {n_normal_samples+n_ood_samples}, Normal samples: {number_of_normal_samples}, Attack samples: {number_of_attacks_samples}, OOD samples: {n_ood_samples}")
 
-# Create different colors for the labels (yellow for normal, purple for OOD)
+# Create different colors for the labels (yellow for other, purple for OOD and green for normal)
 transform_color = np.vectorize(lambda x: (1 if x == 'ood' else (2 if x
                                == 'normal' else 3)))
 
@@ -59,15 +59,20 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
     (row, col) = (i // n_colrow + 1, i % n_colrow + 1)
     d_off_ = d_min_ * .7
 
+    # tmp variable to store the data
     data = data_initial
+
+    # Run the soft brownian offset algorithm
     data_ood = soft_brownian_offset(data, d_min_, d_off_,
                                     softness=softness_,
                                     n_samples=n_ood_samples)
 
     data = np.concatenate((data, data_ood))
+    # Merge the initial data with the OOD data
 
     labels = np.concatenate((csv_data.label, [
                             'ood' for x in range(n_ood_samples)]))
+    # Merge the initial labels with the OOD labels
 
     umap_2d = UMAP(n_components=2, init='random', random_state=0,
                    n_neighbors=70, min_dist=.8)
