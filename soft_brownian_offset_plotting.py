@@ -29,16 +29,18 @@ n_ood_samples = n_normal_samples + int(n_normal_samples * .1)
 # reduce the number of sample data
 csv_data = csv_data[0:n_normal_samples]
 
+# Select only attack samples
+data_used = csv_data[csv_data['label'] != "normal"]
 
 # Initialize legend values
 number_of_normal_samples = len(csv_data[csv_data['label'] == "normal"])
 number_of_attacks_samples = len(csv_data[csv_data['label'] != "normal"])
 
 # Remove the label column
-data_initial = csv_data.drop(columns=['label']).to_numpy()
+data_initial = data_used.drop(columns=['label']).to_numpy()
 
 # Number of columns for the plot
-n_colrow = 4
+n_colrow = 1
 d_min = np.linspace(.25, .45, n_colrow)
 softness = np.linspace(0, 1, n_colrow)
 
@@ -67,12 +69,13 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
                                     softness=softness_,
                                     n_samples=n_ood_samples)
 
-    data = np.concatenate((data, data_ood))
     # Merge the initial data with the OOD data
+    data = np.concatenate((data, data_ood, csv_data[csv_data['label'] == "normal"].drop(
+        columns=['label']).to_numpy()))
 
-    labels = np.concatenate((csv_data.label, [
-                            'ood' for x in range(n_ood_samples)]))
     # Merge the initial labels with the OOD labels
+    labels = np.concatenate((data_used.label, [
+        'ood' for x in range(n_ood_samples)], csv_data[csv_data['label'] == "normal"].label))
 
     umap_2d = UMAP(n_components=2, init='random', random_state=0,
                    n_neighbors=70, min_dist=.8)
