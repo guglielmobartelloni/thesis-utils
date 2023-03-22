@@ -20,6 +20,7 @@ csv_data = pd.read_csv('datasets/ADFANet_Shuffled_LabelOK.csv')
 # n_normal_samples = 500
 # n_ood_samples = 600
 
+# the number of normal samples are 1.5% of the initial data (for performance)
 n_normal_samples = int(len(csv_data) * .015)
 
 # the number ood samples are 110% of the initial data
@@ -30,9 +31,14 @@ csv_data = csv_data[0:n_normal_samples]
 
 number_of_normal_samples = len(csv_data[csv_data['label'] == "normal"])
 number_of_attacks_samples = len(csv_data[csv_data['label'] != "normal"])
+# Select only attack samples
+csv_data = csv_data[csv_data['label'] != "normal"]
 
+# Initialize legend values
+# Remove the label column
 data_initial = csv_data.drop(columns=['label']).to_numpy()
 
+# Number of columns for the plot
 n_colrow = 4
 d_min = np.linspace(.25, .45, n_colrow)
 softness = np.linspace(0, 1, n_colrow)
@@ -46,6 +52,7 @@ fig = make_subplots(rows=n_colrow,
 fig.update_layout(
     title_text=f"Total Samples: {n_normal_samples+n_ood_samples}, Normal samples: {number_of_normal_samples}, Attack samples: {number_of_attacks_samples}, OOD samples: {n_ood_samples}")
 
+# Create different colors for the labels
 transform_color = np.vectorize(lambda x: (1 if x == 'ood' else (2 if x
                                == 'normal' else 3)))
 
