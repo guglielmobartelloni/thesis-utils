@@ -3,3 +3,5 @@ pandas
 plotly
 sbo
 umap-learn
+packaging
+
