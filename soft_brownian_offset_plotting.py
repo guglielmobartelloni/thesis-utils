@@ -29,8 +29,6 @@ n_ood_samples = n_normal_samples + int(n_normal_samples * .1)
 # reduce the number of sample data
 csv_data = csv_data[0:n_normal_samples]
 
-# Select only attack samples
-csv_data = csv_data[csv_data['label'] != "normal"]
 
 # Initialize legend values
 number_of_normal_samples = len(csv_data[csv_data['label'] == "normal"])
