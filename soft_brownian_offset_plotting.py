@@ -17,28 +17,28 @@ import itertools
 import numpy as np
 from sbo import soft_brownian_offset
 
-csv_data = pd.read_csv('datasets/ADFANet_Shuffled_LabelOK.csv')
+input_data = pd.read_csv('datasets/ADFANet_Shuffled_LabelOK.csv')
 
 # n_normal_samples = 500
 # n_ood_samples = 600
 
 # the number of normal samples are 1.5% of the initial data (for performance)
 # n_normal_samples = int(len(csv_data) * .015)
-n_normal_samples = int(len(csv_data) * .035)
+n_normal_samples = int(len(input_data) * .035)
 
 # the number ood samples are 110% of the initial data
 # n_ood_samples = n_normal_samples + int(n_normal_samples * .1)
 n_ood_samples = 2000
 
 # reduce the number of sample data
-csv_data = csv_data[0:n_normal_samples]
+input_data = input_data[0:n_normal_samples]
 
 # Select only attack samples
-data_used = csv_data[csv_data['label'] != "normal"]
+data_used = input_data[input_data['label'] != "normal"]
 
 # Initialize legend values
-number_of_normal_samples = len(csv_data[csv_data['label'] == "normal"])
-number_of_attacks_samples = len(csv_data[csv_data['label'] != "normal"])
+number_of_normal_samples = len(input_data[input_data['label'] == "normal"])
+number_of_attacks_samples = len(input_data[input_data['label'] != "normal"])
 
 # Remove the label column
 data_initial = data_used.drop(columns=['label']).to_numpy()
@@ -74,12 +74,12 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
                                     n_samples=n_ood_samples)
 
     # Merge the initial data with the OOD data and normal data
-    data = np.concatenate((data, data_ood, csv_data[csv_data['label'] == "normal"].drop(
+    data = np.concatenate((data, data_ood, input_data[input_data['label'] == "normal"].drop(
         columns=['label']).to_numpy()))
 
     # Merge the initial labels with the OOD labels
     labels = np.concatenate((data_used.label, [
-        'ood' for x in range(n_ood_samples)], csv_data[csv_data['label'] == "normal"].label))
+        'ood' for x in range(n_ood_samples)], input_data[input_data['label'] == "normal"].label))
 
     umap_2d = UMAP(n_components=2, init='random', random_state=0,
                    n_neighbors=70, min_dist=.8)
