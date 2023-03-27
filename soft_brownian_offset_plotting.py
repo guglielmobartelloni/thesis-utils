@@ -21,10 +21,12 @@ csv_data = pd.read_csv('datasets/ADFANet_Shuffled_LabelOK.csv')
 # n_ood_samples = 600
 
 # the number of normal samples are 1.5% of the initial data (for performance)
-n_normal_samples = int(len(csv_data) * .015)
+# n_normal_samples = int(len(csv_data) * .015)
+n_normal_samples = int(len(csv_data) * .035)
 
 # the number ood samples are 110% of the initial data
-n_ood_samples = n_normal_samples + int(n_normal_samples * .1)
+# n_ood_samples = n_normal_samples + int(n_normal_samples * .1)
+n_ood_samples = 2000
 
 # reduce the number of sample data
 csv_data = csv_data[0:n_normal_samples]
@@ -40,7 +42,7 @@ number_of_attacks_samples = len(csv_data[csv_data['label'] != "normal"])
 data_initial = data_used.drop(columns=['label']).to_numpy()
 
 # Number of columns for the plot
-n_colrow = 1
+n_colrow = 2
 d_min = np.linspace(.25, .45, n_colrow)
 softness = np.linspace(0, 1, n_colrow)
 
@@ -69,7 +71,7 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
                                     softness=softness_,
                                     n_samples=n_ood_samples)
 
-    # Merge the initial data with the OOD data
+    # Merge the initial data with the OOD data and normal data
     data = np.concatenate((data, data_ood, csv_data[csv_data['label'] == "normal"].drop(
         columns=['label']).to_numpy()))
 
