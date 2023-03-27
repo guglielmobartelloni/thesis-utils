@@ -4,4 +4,6 @@ plotly
 sbo
 umap-learn
 packaging
+xgboost
+
 
