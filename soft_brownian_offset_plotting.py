@@ -41,7 +41,7 @@ n_samples = 100000
 
 # the number ood samples are 110% of the initial data
 # n_ood_samples = n_normal_samples + int(n_normal_samples * .1)
-n_ood_samples = 10000
+n_ood_samples = 1
 
 # reduce the number of sample data
 input_data = input_data[0:n_samples]
