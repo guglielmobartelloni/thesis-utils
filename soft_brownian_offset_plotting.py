@@ -33,7 +33,7 @@ def setup_plots():
     return fig
 
 
-input_data = pd.read_csv('datasets/ADFANet_Shuffled_LabelOK.csv')
+input_data = pd.read_csv('./datasets/CIDDS_Shuffled.csv')
 
 # the number of normal samples are 1.5% of the initial data (for performance)
 n_samples = 100000
@@ -47,7 +47,7 @@ n_ood_samples = 1
 input_data = input_data[0:n_samples]
 
 # Select only attack samples
-attacks_packets_tipes = ['1b', 'mailbomb', 'neptune', 'other', 'portsweep']
+attacks_packets_tipes = ['bruteForce', 'dos', 'pingScan', 'portScan']
 attacks_packets = input_data[input_data['label'] != "normal"]
 # Replace the attack labels with the attack type
 attacks_packets.replace(attacks_packets_tipes, 'attack', inplace=True)
