@@ -7,7 +7,7 @@ import xgboost as xgb
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
 from umap import UMAP
 # import plotly.express as px
 from plotly.subplots import make_subplots
@@ -90,9 +90,8 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
         'attack' for x in range(n_ood_samples)], normal_packets.label))
 
     # Normalize the labels for the model
-    le = LabelEncoder()
-    le.fit(labels)
-    y_with_ood = le.transform(labels)
+    one_hot_encoder = OneHotEncoder(sparse=False)
+    y_with_ood = one_hot_encoder.fit_transform(labels.reshape(-1, 1))
     X_with_ood = data_i
 
     # Separate the data
@@ -100,14 +99,13 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
         X_with_ood, y_with_ood, test_size=0.4, random_state=123)
 
     model = xgb.XGBClassifier()
-    print(len(X_with_ood_train))
-    print(len(y_with_ood_train))
     # Train the model
     model.fit(X_with_ood_train, y_with_ood_train)
 
     y_with_ood_pred = model.predict(X_with_ood_test)
     accuracy_with_ood = accuracy_score(y_with_ood_test, y_with_ood_pred)
-    metthews_with_ood = matthews_corrcoef(y_with_ood_test, y_with_ood_pred)
+    metthews_with_ood = matthews_corrcoef(y_with_ood_test.argmax(
+        axis=1), y_with_ood_pred.argmax(axis=1))
 
     print("WITH OOD Accuracy: {:.4f}\tMetthews: {:.4f}".format(
         accuracy_with_ood, metthews_with_ood))
