@@ -10,6 +10,8 @@ from sklearn.model_selection import train_test_split
 
 if not os.path.exists("images"):
     os.mkdir("images")
+if not os.path.exists("html"):
+    os.mkdir("html")
 
 from umap import UMAP
 
@@ -108,11 +110,12 @@ def gen_test(input_data, filename):
         # fig_2d.show()
 
     # fig.show()
-    fig.write_image("images/" + filename)
+    fig.write_image("images/" + filename + '.pdf')
+    fig.write_html("html/" + filename + '.html')
 
 
 input_data = pd.read_csv('datasets/ADFANet_Shuffled_LabelOK.csv')
-gen_test(input_data, 'ADFANet_generation_test.pdf')
+gen_test(input_data, 'ADFANet_generation_test')
 
 # input_data = pd.read_csv('datasets/CIDDS_Shuffled.csv')
 # gen_test(input_data, 'CIDDS_generation_test.pdf')
