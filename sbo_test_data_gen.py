@@ -33,11 +33,11 @@ def gen_test(input_data, filename):
 
     # the number of normal samples are 1.5% of the initial data (for performance)
     # n_normal_samples = int(len(csv_data) * .015)
-    n_normal_samples = int(len(input_data) * .035)
+    n_normal_samples = int(len(input_data))
 
 # the number ood samples are 110% of the initial data
-# n_ood_samples = n_normal_samples + int(n_normal_samples * .1)
-    n_ood_samples = 2000
+    # n_ood_samples = n_normal_samples + int(n_normal_samples * .1)
+    n_ood_samples = 50000
 
 # reduce the number of sample data
     input_data = input_data[0:n_normal_samples]
@@ -115,7 +115,7 @@ def gen_test(input_data, filename):
 
 
 input_data = pd.read_csv('datasets/ADFANet_Shuffled_LabelOK.csv')
-gen_test(input_data, 'ADFANet_generation_test')
+gen_test(input_data, 'ADFANet_generation_test_ALL')
 
 # input_data = pd.read_csv('datasets/CIDDS_Shuffled.csv')
 # gen_test(input_data, 'CIDDS_generation_test.pdf')
