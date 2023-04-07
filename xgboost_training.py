@@ -100,12 +100,12 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
     y_with_ood_pred = model.predict(X_with_ood_test)
 
     # Save the model for later use
-    model.save_model(f'./models/xgboost_{d_min}_{softness}.json')
+    model.save_model(f'./models/xgboost_{d_min_}_{softness_}.json')
     accuracy_with_ood = accuracy_score(y_with_ood_test, y_with_ood_pred)
     metthews_with_ood = matthews_corrcoef(y_with_ood_test.argmax(
         axis=1), y_with_ood_pred.argmax(axis=1))
 
-    print(f"dmin: {d_min}\tSoftness: {softness}")
+    print(f"dmin: {d_min_}\tSoftness: {softness_}")
 
     print("WITH OOD Accuracy {:.4f}\tMetthews: {:.4f}".format(
         accuracy_with_ood, metthews_with_ood))
