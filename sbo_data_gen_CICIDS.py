@@ -4,6 +4,7 @@
 
 import os
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
 
 if not os.path.exists("images"):
@@ -23,15 +24,37 @@ import numpy as np
 from sbo import soft_brownian_offset
 
 
+def maximum_absolute_scaling(df):
+    # copy the dataframe
+    df_scaled = df.copy()
+    # apply maximum absolute scaling
+    for column in df_scaled.columns:
+        df_scaled[column] = df_scaled[column] / df_scaled[column].abs().max()
+    return df_scaled
+
+
+def robust_scaling(df):
+    # copy the dataframe
+    df_robust = df.copy()
+    # apply robust scaling
+    for column in df_robust.columns:
+        df_robust[column] = (df_robust[column] - df_robust[column].median()) / (
+            df_robust[column].quantile(0.75) - df_robust[column].quantile(0.25))
+    return df_robust
+
+
 def gen_test(input_data, filename):
 
     print("Generating data for: " + filename)
-    n_normal_samples = int(len(input_data))
+    n_normal_samples = 50000
+    # n_normal_samples = int(len(input_data))
 
-    n_ood_samples = 1
+    n_ood_samples = 25000
 
 # reduce the number of sample data
     input_data = input_data[0:n_normal_samples]
+    input_data.replace([np.inf, -np.inf], -1, inplace=True)
+    input_data.replace(np.nan, -1, inplace=True)
 
 # Select only attack samples
     data_used = input_data[input_data['label'] != "normal"]
@@ -42,11 +65,19 @@ def gen_test(input_data, filename):
         input_data[input_data['label'] != "normal"])
 
 # Remove the label column and remve NaN values
-    data_initial = data_used.drop(
-        columns=['label', 'Timestamp'])
-    data_initial = (data_initial-data_initial.min()) / \
-        (data_initial.max()-data_initial.min())
-    data_initial = data_initial.dropna().to_numpy()
+    data_initial = data_used.drop(columns=['label', 'Timestamp'])
+    # Replace inf values with -1
+
+    print(data_initial.isnull().values.any())
+    print(data_used.isnull().values.any())
+    print(input_data.isnull().values.any())
+
+
+    # scaler = StandardScaler()
+    # scaler.fit(data_initial)
+    # data_initial = scaler.transform(data_initial)
+
+    data_initial = data_initial.to_numpy()
 
 # Number of columns for the plot
     n_colrow = 2
@@ -80,7 +111,7 @@ def gen_test(input_data, filename):
 
         # Merge the initial data with the OOD data and normal data
         data = np.concatenate((data, data_ood, input_data[input_data['label'] == "normal"].drop(
-            columns=['label']).to_numpy()))
+            columns=['label', 'Timestamp']).to_numpy()))
 
         # Merge the initial labels with the OOD labels
         labels = np.concatenate((data_used.label, [
