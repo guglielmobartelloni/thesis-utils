@@ -74,6 +74,7 @@ data_i = np.concatenate((data_i, data_ood, normal_packets.drop(
 labels = np.concatenate((attacks_packets.label, [
     'attack' for x in range(n_ood_samples)], normal_packets.label))
 
+print(labels)
 # Normalize the labels for the model
 one_hot_encoder = OneHotEncoder(sparse=False)
 y_with_ood = one_hot_encoder.fit_transform(labels.reshape(-1, 1))

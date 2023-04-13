@@ -39,12 +39,13 @@ input_data.drop(columns=['label', 'Timestamp'], inplace=True)
 
 input_data = pd.get_dummies(input_data)
 input_data['label'] = labels
-print(input_data.head())
 
 
 # Select only attack samples
-# attacks_packets_types = ['bruteForce', 'dos', 'pingScan', 'portScan']
-attacks_packets_types = ['1b', 'mailbomb', 'neptune', 'other', 'portsweep']
+attacks_packets_types = ['Bot', 'DDOS attack-HOIC', 'DDOS attack-LOIC-UDP',
+                         'DoS attacks-Hulk', 'DoS attacks-SlowHTTPTest', 'FTP-BruteForce',
+                         'Infilteration', 'SSH-Bruteforce']
+# attacks_packets_types = ['1b', 'mailbomb', 'neptune', 'other', 'portsweep']
 attacks_packets = input_data[input_data['label'] != "normal"]
 # Replace the attack labels with the attack type
 attacks_packets.replace(attacks_packets_types, 'attack', inplace=True)
@@ -102,7 +103,7 @@ for (i, (d_min_, softness_)) in enumerate(itertools.product(d_min, softness)):
     y_with_ood_pred = model.predict(X_with_ood_test)
 
     # Save the model for later use
-    model.save_model(f'./models/xgboost_{d_min_}_{softness_}.json')
+    model.save_model(f'./models/xgboost_{d_min_}_{softness_}_CICIDS18_with_100k.json')
     accuracy_with_ood = accuracy_score(y_with_ood_test, y_with_ood_pred)
     metthews_with_ood = matthews_corrcoef(y_with_ood_test.argmax(
         axis=1), y_with_ood_pred.argmax(axis=1))
