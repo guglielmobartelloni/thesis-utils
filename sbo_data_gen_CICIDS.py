@@ -68,11 +68,6 @@ def gen_test(input_data, filename):
     data_initial = data_used.drop(columns=['label', 'Timestamp'])
     # Replace inf values with -1
 
-    print(data_initial.isnull().values.any())
-    print(data_used.isnull().values.any())
-    print(input_data.isnull().values.any())
-
-
     # scaler = StandardScaler()
     # scaler.fit(data_initial)
     # data_initial = scaler.transform(data_initial)

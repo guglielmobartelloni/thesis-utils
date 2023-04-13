@@ -17,7 +17,7 @@ transform_color = np.vectorize(lambda x: (1 if x == 'ood' else (2 if x
                                == 'normal' else 3)))
 
 
-input_data = pd.read_csv('./datasets/ADFANet_Shuffled_LabelOK.csv')
+input_data = pd.read_csv('./datasets/CICIDS18_Shuffled_Reduced.csv')
 
 # the number of normal samples are 1.5% of the initial data (for performance)
 n_samples = len(input_data)
@@ -25,15 +25,17 @@ n_samples = len(input_data)
 
 # the number ood samples are 110% of the initial data
 # n_ood_samples = n_normal_samples + int(n_normal_samples * .1)
-n_ood_samples = 1
+n_ood_samples = 100000
 
 # reduce the number of sample data
 input_data = input_data[0:n_samples]
+input_data.replace([np.inf, -np.inf], -1, inplace=True)
+input_data.replace(np.nan, -1, inplace=True)
 # input_data.drop(columns=['Date_first_seen'], inplace=True)
 
 # One hot encode the data without the labels
 labels = input_data['label']
-input_data.drop(columns=['label'], inplace=True)
+input_data.drop(columns=['label', 'Timestamp'], inplace=True)
 
 input_data = pd.get_dummies(input_data)
 input_data['label'] = labels
