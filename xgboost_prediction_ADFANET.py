@@ -8,7 +8,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import OneHotEncoder
-import itertools
 import numpy as np
 from sbo import soft_brownian_offset
 
@@ -59,24 +58,19 @@ number_of_attacks_samples = len(input_data[input_data['label'] != "normal"])
 # tmp variable to store the data removing the labels
 data_i = attacks_packets.drop(columns=['label']).to_numpy()
 
-# Run the soft brownian offset algorithm (hard coded values)
-data_ood = soft_brownian_offset(data_i, 0.25, 0.175,
-                                softness=0.0,
-                                n_samples=n_ood_samples)
 
 # Merge the initial data with the OOD data and normal data
-data_i = np.concatenate((data_i, data_ood, normal_packets.drop(
+data_i = np.concatenate((data_i, normal_packets.drop(
     columns=['label']).to_numpy()))
 
 # Merge the initial labels with the OOD labels
 # labels = np.concatenate((attacks_packets.label, [
 #     'ood' for x in range(n_ood_samples)], normal_packets.label))
-labels = np.concatenate((attacks_packets.label, [
-    'attack' for x in range(n_ood_samples)], normal_packets.label))
+labels = np.concatenate((attacks_packets.label, normal_packets.label))
 
 print(labels)
 # Normalize the labels for the model
-one_hot_encoder = OneHotEncoder(sparse=False)
+one_hot_encoder = OneHotEncoder(sparse_output=False)
 y_with_ood = one_hot_encoder.fit_transform(labels.reshape(-1, 1))
 print(y_with_ood)
 X_with_ood = data_i
@@ -94,7 +88,7 @@ y_with_ood_pred = model.predict(X_with_ood_test)
 
 # Save the model for later use
 accuracy_with_ood = accuracy_score(y_with_ood_test, y_with_ood_pred)
-metthews_with_ood = matthews_corrcoef(y_with_ood_test.argmax(
+metthews_with_ood = matthews_corrcoef(y_with_ood_test.argmax(  # type: ignore
     axis=1), y_with_ood_pred.argmax(axis=1))
 
 print("WITH OOD Accuracy {:.4f}\tMetthews: {:.4f}".format(

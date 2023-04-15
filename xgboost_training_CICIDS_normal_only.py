@@ -94,8 +94,8 @@ def train_and_save_model(input_data, n_samples, n_ood_samples):
         model.save_model(model_path)
         print(f"Model saved to {model_path}")
         accuracy_with_ood = accuracy_score(y_with_ood_test, y_with_ood_pred)
-        metthews_with_ood = matthews_corrcoef(y_with_ood_test.argmax(
-            axis=1), y_with_ood_pred.argmax(axis=1))
+        metthews_with_ood = matthews_corrcoef(y_with_ood_test.argmax(  # type: ignore
+            axis=1), y_with_ood_pred.argmax(axis=1))  # type: ignore
         print(f"Accuracy: {accuracy_with_ood} - Metthews: {metthews_with_ood}")
 
 
