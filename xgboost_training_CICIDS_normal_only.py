@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-"""Soft Brownian Offset - Plotting"""
+"""Soft Brownian Offset - We train the model only with normal samples"""
 
 import pandas as pd
 import xgboost as xgb
@@ -52,7 +52,7 @@ def train_and_save_model(input_data, n_samples, n_ood_samples):
     #     input_data[input_data['label'] != "normal"])
 
 # Number of columns for the plot
-    n_colrow = 1
+    n_colrow = 4
     d_min = np.linspace(.25, .45, n_colrow)
     softness = np.linspace(0, 1, n_colrow)
 
@@ -61,7 +61,7 @@ def train_and_save_model(input_data, n_samples, n_ood_samples):
         d_off_ = d_min_ * .7
 
         # tmp variable to store the data removing the labels
-        data_i = attacks_packets.drop(columns=['label']).to_numpy()
+        data_i = normal_packets.drop(columns=['label']).to_numpy()
 
         # Run the soft brownian offset algorithm
         data_ood = soft_brownian_offset(data_i, d_min_, d_off_,
@@ -69,19 +69,14 @@ def train_and_save_model(input_data, n_samples, n_ood_samples):
                                         n_samples=n_ood_samples)
 
         # Merge the initial data with the OOD data and normal data
-        data_i = np.concatenate((data_i, data_ood, normal_packets.drop(
-            columns=['label']).to_numpy()))
+        data_i = np.concatenate((data_i, data_ood))
+        labels = np.concatenate((normal_packets.label, [
+            'attack' for x in range(n_ood_samples)]))
 
-        # Merge the initial labels with the OOD labels
-        # labels = np.concatenate((attacks_packets.label, [
-        #     'ood' for x in range(n_ood_samples)], normal_packets.label))
-        labels = np.concatenate((attacks_packets.label, [
-            'attack' for x in range(n_ood_samples)], normal_packets.label))
-
-        # Normalize the labels for the model
-        one_hot_encoder = OneHotEncoder(sparse=False)
+        # One hot encode the labels for the model
+        one_hot_encoder = OneHotEncoder(sparse_output=False)
         y_with_ood = one_hot_encoder.fit_transform(labels.reshape(-1, 1))
-        print(y_with_ood)
+
         X_with_ood = data_i
 
         # Separate the data
@@ -94,16 +89,14 @@ def train_and_save_model(input_data, n_samples, n_ood_samples):
 
         y_with_ood_pred = model.predict(X_with_ood_test)
 
-        model_path = f'./models/xgboost_{d_min_}_{softness_}_CICIDS18_with_100k.json'
-
         # Save the model for later use
+        model_path = f'./models/xgboost_{d_min_}_{softness_}_CICIDS18_with_100k_only_normal.json'
         model.save_model(model_path)
         print(f"Model saved to {model_path}")
         accuracy_with_ood = accuracy_score(y_with_ood_test, y_with_ood_pred)
         metthews_with_ood = matthews_corrcoef(y_with_ood_test.argmax(
             axis=1), y_with_ood_pred.argmax(axis=1))
-
-        return accuracy_with_ood, metthews_with_ood
+        print(f"Accuracy: {accuracy_with_ood} - Metthews: {metthews_with_ood}")
 
 
 input_data = pd.read_csv('./datasets/CICIDS18_Shuffled_Reduced.csv')
