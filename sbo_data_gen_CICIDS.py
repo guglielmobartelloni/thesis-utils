@@ -120,6 +120,7 @@ def gen_test(input_data, filename):
             x=proj_2d[:, 0],
             y=proj_2d[:, 1],
             mode='markers',
+            showlegend=False,
             marker=dict(
                 color=transform_color(labels),
                 colorscale='Viridis',
@@ -130,6 +131,39 @@ def gen_test(input_data, filename):
         #                     labels={'color': 'label'})
         # fig_2d.show()
 
+    # fig.show()
+
+    fig.add_trace(go.Scatter(
+        x=[None],
+        y=[None],
+        mode='markers',
+        name='Normal',
+        marker=dict(
+            size=10,
+            color="rgb(35,144,139)",
+            colorscale='Viridis',
+        )))
+
+    fig.add_trace(go.Scatter(
+        x=[None],
+        y=[None],
+        mode='markers',
+        name='Attack',
+        marker=dict(
+            size=10,
+            color="rgb(253,231,37)",
+            colorscale='Viridis',
+        )))
+    fig.add_trace(go.Scatter(
+        x=[None],
+        y=[None],
+        mode='markers',
+        name='OOD',
+        marker=dict(
+            size=10,
+            color="rgb(69,13,84)",
+            colorscale='Viridis',
+        )))
     # fig.show()
     fig.write_image("images/" + filename + '.pdf')
     fig.write_html("html/" + filename + '.html')
