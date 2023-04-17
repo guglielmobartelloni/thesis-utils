@@ -46,10 +46,10 @@ def robust_scaling(df):
 def gen_test(input_data, filename):
 
     print("Generating data for: " + filename)
-    n_normal_samples = 50000
+    n_normal_samples = 1000
     # n_normal_samples = int(len(input_data))
 
-    n_ood_samples = 25000
+    n_ood_samples = 2000
 
 # reduce the number of sample data
     input_data = input_data[0:n_normal_samples]
@@ -123,7 +123,7 @@ def gen_test(input_data, filename):
             marker=dict(
                 color=transform_color(labels),
                 colorscale='Viridis',
-                showscale=True
+                showscale=False
             )), row=row, col=col)
 
         # fig_2d = px.scatter(proj_2d, x=0, y=1, color=labels,

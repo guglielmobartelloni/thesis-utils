@@ -82,7 +82,7 @@ X_with_ood_train, X_with_ood_test, y_with_ood_train, y_with_ood_test = train_tes
 model = xgb.XGBClassifier()
 # Train the model
 # model.fit(X_with_ood_train, y_with_ood_train)
-model.load_model(f'./models/xgboost_without_ood.json')
+model.load_model(f'./models/xgboost_ADFANET_without_ood.json')
 
 y_with_ood_pred = model.predict(X_with_ood_test)
 
