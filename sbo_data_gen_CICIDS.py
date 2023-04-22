@@ -46,10 +46,10 @@ def robust_scaling(df):
 def gen_test(input_data, filename):
 
     print("Generating data for: " + filename)
-    n_normal_samples = 1000
+    n_normal_samples = 50000
     # n_normal_samples = int(len(input_data))
 
-    n_ood_samples = 2000
+    n_ood_samples = int(n_normal_samples * 0.25)
 
 # reduce the number of sample data
     input_data = input_data[0:n_normal_samples]
@@ -143,7 +143,6 @@ def gen_test(input_data, filename):
             color="rgb(35,144,139)",
             colorscale='Viridis',
         )))
-
     fig.add_trace(go.Scatter(
         x=[None],
         y=[None],
@@ -170,4 +169,4 @@ def gen_test(input_data, filename):
 
 
 input_data = pd.read_csv('datasets/CICIDS18_Shuffled_Reduced.csv')
-gen_test(input_data, 'CICIDS18_generation_test')
+gen_test(input_data, 'CICIDS18_attack_only_25k')

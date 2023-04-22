@@ -30,7 +30,8 @@ def gen_test(input_data, filename):
     n_normal_samples = int(len(input_data))
 
     # This is a hard coded value for the number of OOD samples, from the test it seems to be the best value
-    n_ood_samples = 50000
+    n_ood_samples = int(n_normal_samples * 0.25)
+
 
 # reduce the number of sample data
     input_data = input_data[0:n_normal_samples]
