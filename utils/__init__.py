@@ -2,6 +2,7 @@ import numpy as np
 from sbo import soft_brownian_offset
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import matthews_corrcoef
 import xgboost as xgb
 
 
@@ -64,21 +65,22 @@ def merge_labels(normal_data, attacks_data, ood_data):
     return np.concatenate((normal_data.label, attacks_data.label, ['attack' for x in range(len(ood_data))]))
 
 
-def train_and_save_model(data,labels, model_path):
+def train_and_save_model(data,labels,test_size, model_path):
     # Normalize the labels for the model
     encoder = LabelEncoder()
     y = encoder.fit_transform(labels.reshape(-1, 1))
-    X = data_i
+    X = data
 
     # Separate the data
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=123)
+        X, y, test_size=test_size, random_state=123)
 
     model = xgb.XGBClassifier()
     # Train the model
     model.fit(X_train, y_train)
 
-    y_predicted = model.predict(X_test)
-
     # Save the model
     model.save_model(model_path)
+
+    y_predicted = model.predict(X_test)
+    return matthews_corrcoef(y_test, y_predicted)
