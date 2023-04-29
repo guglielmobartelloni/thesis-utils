@@ -64,7 +64,7 @@ def gen_test(input_data, filename):
     number_of_attacks_samples = len(
         input_data[input_data['label'] != "normal"])
 
-# Remove the label column and remve NaN values
+# Remove the label column
     data_initial = data_used.drop(columns=['label', 'Timestamp'])
     # Replace inf values with -1
 
