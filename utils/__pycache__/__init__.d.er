@@ -1,5 +1,10 @@
-##[pylyzer] succeed /users/samurai/documents/progetti/thesis_utils/utils/__init__.py 1682770798
+##[pylyzer] failed /users/samurai/documents/progetti/thesis_utils/utils/__init__.py 1682772579
 .np = pyimport "numpy"
 
-.preprocess_cicids: |Type_3 <: Structural({.__getitem__ = (self: Type_3, Type_17) -> Type_18}), Type_18 <: Structural({.__getitem__ = (self: Type_18, Type_40) -> Type_41}), Type_17: Type, Type_40 :> Bool, Type_41: Type|(input_data: Type_3, n_samples: Obj) -> Tuple([Type_41, Structural({.replace = (self: Never, Obj, Obj) -> Never})])
-.preprocess_adfa: |Type_65 :> Bool, Type_66: Type, Type_52 <: Structural({.__getitem__ = (self: Type_52, Type_65) -> Type_66})|(input_data: Type_52, n_normal_samples: Obj) -> Tuple([Type_66, Structural({.replace = (self: Never, Obj, Obj) -> Never})])
+.___v155 = pyimport "sbo"
+.soft_brownian_offset: Failure
+.preprocess_cicids: |Type_5 <: Structural({.__getitem__ = (self: Type_5, Type_37) -> Type_38}), Type_37: Type, Type_38 <: Structural({.__getitem__ = (self: Type_38, Type_60) -> Type_61}), Type_60 :> Bool, Type_61: Type|(input_data: Type_5, n_samples: Obj) -> Tuple([Type_61, Structural({.replace = (self: Never, Obj, Obj) -> Never})])
+.preprocess_adfa: |Type_72 <: Structural({.__getitem__ = (self: Type_72, Type_85) -> Type_86}), Type_85 :> Bool, Type_86: Type|(input_data: Type_72, n_normal_samples: Obj) -> Tuple([Type_86, Structural({.replace = (self: Never, Obj, Obj) -> Never})])
+.generate_ood: |Type_95: Type, Type_13 <: Structural({.drop = (self: Type_13) -> Type_94}), Type_94 <: Structural({.to_numpy = (self: Type_94) -> Type_95})|(starting_data: Type_13, n_ood_samples: Obj, d_min: Structural({.__mul__ = (self: Never, Obj) -> Never}), softness: Obj) -> Never
+.merge_data: |Type_19 <: Structural({.drop = (self: Type_19) -> Type_99}), Type_99: Type|(normal_data: Type_19, attacks_data: Structural({.drop = (self: Never) -> Never}), ood_data: Obj) -> Never
+.merge_labels: |Type_24 <: Structural({.label = Type_106}), Type_106: Type|(normal_data: Type_24, attacks_data: Structural({.label = Obj}), ood_data: Obj) -> Never
