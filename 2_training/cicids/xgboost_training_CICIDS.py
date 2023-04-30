@@ -73,8 +73,6 @@ def train_and_save_model(input_data, n_samples, n_ood_samples):
             columns=['label']).to_numpy()))
 
         # Merge the initial labels with the OOD labels
-        # labels = np.concatenate((attacks_packets.label, [
-        #     'ood' for x in range(n_ood_samples)], normal_packets.label))
         labels = np.concatenate((attacks_packets.label, [
             'attack' for x in range(n_ood_samples)], normal_packets.label))
 
