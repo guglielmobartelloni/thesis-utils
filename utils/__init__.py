@@ -4,6 +4,8 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import matthews_corrcoef
 import xgboost as xgb
+from os import listdir
+from os.path import isfile, join
 
 
 def preprocess_cicids(input_data, n_samples):
@@ -55,17 +57,22 @@ def generate_ood(starting_data, n_ood_samples, d_min, softness):
 
 
 # Merge the initial data with the OOD data and normal data
-def merge_data(normal_data, attacks_data, ood_data):
+def merge_data_with_ood(normal_data, attacks_data, ood_data):
     return (np.concatenate((normal_data.drop(columns=['label']), attacks_data.drop(columns=['label']), ood_data)), merge_labels(normal_data, attacks_data, ood_data))
 
-# Merge the initial labels with the OOD labels
+
+def merge_data(normal_data, attacks_data):
+    merged_data = np.concatenate(
+        (normal_data.drop(columns=['label']), attacks_data.drop(columns=['label'])))
+    merged_labels = np.concatenate((normal_data.label, attacks_data.label))
+    return (merged_data, merged_labels)
 
 
 def merge_labels(normal_data, attacks_data, ood_data):
     return np.concatenate((normal_data.label, attacks_data.label, ['attack' for x in range(len(ood_data))]))
 
 
-def train_and_save_model(data,labels,test_size, model_path):
+def train_and_save_model(data, labels, test_size, model_path):
     # Normalize the labels for the model
     encoder = LabelEncoder()
     y = encoder.fit_transform(labels.reshape(-1, 1))
@@ -84,3 +91,20 @@ def train_and_save_model(data,labels,test_size, model_path):
 
     y_predicted = model.predict(X_test)
     return matthews_corrcoef(y_test, y_predicted)
+
+
+def is_json(f):
+    return f.endswith('.json')
+
+
+def get_models(models_path):
+    return [join(models_path, f) for f in listdir(models_path) if is_json(join(models_path, f))]
+
+
+def test_model(model_path, data_x, data_y):
+    encoder = LabelEncoder()
+    data_y = encoder.fit_transform(data_y.reshape(-1, 1))
+    model = xgb.XGBClassifier()
+    model.load_model(model_path)
+    y_predicted = model.predict(data_x)
+    return matthews_corrcoef(data_y, y_predicted)
