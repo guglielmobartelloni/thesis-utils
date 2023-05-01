@@ -1,4 +1,5 @@
 import numpy as np
+import csv
 from sbo import soft_brownian_offset
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -34,10 +35,6 @@ def preprocess_adfa(input_data, n_normal_samples):
 
     # reduce the number of sample data
     input_data = input_data[0:n_samples]
-    # input_data.drop(columns=['Date_first_seen'], inplace=True)
-
-    # One hot encode the data without the labels
-    input_data.drop(columns=['label'], inplace=True)
 
     attacks_packets_types = ['1b', 'mailbomb', 'neptune', 'other', 'portsweep']
     attacks_packets = input_data[input_data['label'] != "normal"]
@@ -108,3 +105,11 @@ def test_model(model_path, data_x, data_y):
     model.load_model(model_path)
     y_predicted = model.predict(data_x)
     return matthews_corrcoef(data_y, y_predicted)
+
+def save_in_csv(filename, results):
+    with open(filename, 'w', newline='') as results_file:
+        writer = csv.writer(results_file)
+        writer.writerow(['Model','Mode','Metric'])
+        for result in results:
+            writer.writerow([result, result.split('_')[1], results[result]])
+
