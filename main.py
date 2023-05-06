@@ -16,7 +16,7 @@ import csv
 cicids_dataset = pd.read_csv('./datasets/CICIDS18_Shuffled_Reduced.csv')
 adfa_dataset = pd.read_csv('./datasets/ADFANet_Shuffled_LabelOK.csv')
 N = int(len(adfa_dataset)*.75)
-N_ood = int(N+N+N+N+N)
+N_ood = int(N*0.5)
 d_min = 0.25
 softness = 0.0
 
@@ -40,7 +40,7 @@ def training_ADFA():
 
 
 def training_CICIDS():
-    ood_samples = generate_ood(attack_samples, N_ood, d_min, softness)
+    ood_samples = generate_ood(pd.concat((normal_samples, attack_samples)), N_ood, d_min, softness)
 
     merged_samples, labels = merge_data_with_ood(
         normal_samples, attack_samples, ood_samples)
@@ -76,5 +76,6 @@ def testing(models_path='./results/models/CICIDS'):
 
 
 # training_ADFA()
+training_CICIDS()
 models_path = './results/models/CICIDS/'
 testing(models_path)

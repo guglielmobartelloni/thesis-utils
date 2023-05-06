@@ -109,7 +109,7 @@ def test_model(model_path, data_x, data_y):
 def save_in_csv(filename, results):
     with open(filename, 'w', newline='') as results_file:
         writer = csv.writer(results_file)
-        writer.writerow(['Model','Mode','Metric'])
+        writer.writerow(['Model','Mode','Starting Samples','OOD Samples', 'Metric'])
         for result in results:
-            writer.writerow([result, result.split('_')[1], results[result]])
+            writer.writerow([result, result.split('_')[1], result.split('_')[2],result.split('_')[3], results[result]])
 
