@@ -1,5 +1,7 @@
-##[pylyzer] failed /users/samurai/documents/progetti/thesis_utils/utils/__init__.py 1682858492
+##[pylyzer] failed /users/samurai/documents/progetti/thesis_utils/utils/__init__.py 1684157099
 .np = pyimport "numpy"
+
+.csv = pyimport "csv"
 
 .___v156 = pyimport "sbo"
 .soft_brownian_offset: Failure
@@ -16,13 +18,16 @@
 .___v161 = pyimport "os/path"
 .isfile: (path: PathLike) => Bool
 .join: Failure
-.preprocess_cicids: |Type_17 <: Structural({.__getitem__ = (self: Type_17, Type_82) -> Type_83}), Type_107: Type, Type_106 :> Bool, Type_82: Type, Type_83 <: Structural({.__getitem__ = (self: Type_83, Type_106) -> Type_107})|(input_data: Type_17, n_samples: Obj) -> Tuple([Type_107, Structural({.replace = (self: Never, Obj, Obj) -> Never})])
-.preprocess_adfa: |Type_130 :> Bool, Type_118 <: Structural({.__getitem__ = (self: Type_118, Type_130) -> Type_131}), Type_131: Type|(input_data: Type_118, n_normal_samples: Obj) -> Tuple([Type_131, Structural({.replace = (self: Never, Obj, Obj) -> Never})])
-.generate_ood: |Type_25 <: Structural({.drop = (self: Type_25) -> Type_139}), Type_140: Type, Type_139 <: Structural({.to_numpy = (self: Type_139) -> Type_140})|(starting_data: Type_25, n_ood_samples: Obj, d_min: Structural({.__mul__ = (self: Never, Obj) -> Never}), softness: Obj) -> Never
-.merge_data_with_ood: |Type_31 <: Structural({.drop = (self: Type_31) -> Type_144}), Type_144: Type|(normal_data: Type_31, attacks_data: Structural({.drop = (self: Never) -> Never}), ood_data: Obj) -> Tuple([Never, Never])
-.merge_data: |Type_157: Type, Type_36 <: Structural({.label = Type_157})|(normal_data: Type_36, attacks_data: Structural({.label = Obj})) -> Tuple([Never, Never])
-.merge_labels: |Type_31 <: Structural({.drop = (self: Type_31) -> Type_144}), Type_144: Type|(normal_data: Type_31, attacks_data: Structural({.drop = (self: Never) -> Never}), ood_data: Obj) -> Never
-.train_and_save_model: |Type_183: Type, Type_46 <: Structural({.reshape = (self: Type_46, R, Type_182) -> Type_183}), R :> Int, Type_182 :> {1, }|(data: Obj, labels: Type_46, test_size: Obj, model_path: Obj) -> Never
-.is_json: |Type_202 :> {".json", }, Type_203: Type, Type_51 <: Structural({.endswith = (self: Type_51, Type_202) -> Type_203})|(f: Type_51) -> Type_203
+.preprocess_cicids: |Type_97 <: Structural({.__getitem__ = (self: Type_97, Type_120) -> Type_121}), Type_120 :> Bool, Type_18 <: Structural({.__getitem__ = (self: Type_18, Type_96) -> Type_97}), Type_96: Type, Type_121: Type|(input_data: Type_18, n_samples: Obj) -> Tuple([Type_121, Structural({.replace = (self: Never, Obj, Obj) -> Never})])
+.preprocess_adfa: |Type_144 :> Bool, Type_132 <: Structural({.__getitem__ = (self: Type_132, Type_144) -> Type_145}), Type_145: Type|(input_data: Type_132, n_normal_samples: Obj) -> Tuple([Type_145, Structural({.replace = (self: Never, Obj, Obj) -> Never})])
+.generate_ood: |Type_153 <: Structural({.to_numpy = (self: Type_153) -> Type_154}), Type_154: Type, Type_26 <: Structural({.drop = (self: Type_26) -> Type_153})|(starting_data: Type_26, n_ood_samples: Obj, d_min: Structural({.__mul__ = (self: Never, Obj) -> Never}), softness: Obj) -> Never
+.merge_data_with_ood: |Type_32 <: Structural({.drop = (self: Type_32) -> Type_158}), Type_158: Type|(normal_data: Type_32, attacks_data: Structural({.drop = (self: Never) -> Never}), ood_data: Obj) -> Tuple([Never, Never])
+.merge_data_normal_only_with_ood: |Type_164: Type, Type_37 <: Structural({.drop = (self: Type_37) -> Type_164})|(normal_data: Type_37, ood_data: Obj) -> Tuple([Never, Never])
+.merge_data: |Type_176: Type, Type_41 <: Structural({.label = Type_176})|(normal_data: Type_41, attacks_data: Structural({.label = Obj})) -> Tuple([Never, Never])
+.merge_normal_only_labels: |Type_164: Type, Type_37 <: Structural({.drop = (self: Type_37) -> Type_164})|(normal_data: Type_37, ood_data: Obj) -> Never
+.merge_labels: |Type_32 <: Structural({.drop = (self: Type_32) -> Type_158}), Type_158: Type|(normal_data: Type_32, attacks_data: Structural({.drop = (self: Never) -> Never}), ood_data: Obj) -> Never
+.train_and_save_model: |Type_206 :> {1, }, Type_207: Type, Type_55 <: Structural({.reshape = (self: Type_55, R, Type_206) -> Type_207}), R :> Int|(data: Obj, labels: Type_55, test_size: Obj, model_path: Obj) -> Never
+.is_json: |Type_226 :> {".json", }, Type_60 <: Structural({.endswith = (self: Type_60, Type_226) -> Type_227}), Type_227: Type|(f: Type_60) -> Type_227
 .get_models: (models_path: Obj) -> Never
-.test_model: |Type_214 :> {1, }, R :> Int, Type_59 <: Structural({.reshape = (self: Type_59, R, Type_214) -> Type_215}), Type_215: Type|(model_path: Obj, data_x: Obj, data_y: Type_59) -> Never
+.test_model: |Type_238 :> {1, }, R :> Int, Type_68 <: Structural({.reshape = (self: Type_68, R, Type_238) -> Type_239}), Type_239: Type|(model_path: Obj, data_x: Obj, data_y: Type_68) -> Never
+.save_in_csv: |Type_266 :> {"_", }, Type_72 <: Structural({.__getitem__ = (self: Type_72, T) -> Type_271}), T <: Structural({.split = (self: T, Type_266) -> Type_267}), Type_267 <: Structural({.__getitem__ = (self: Type_267, Type_268) -> Type_269}), Type_268 :> {3, }, Type_269: Type, Type_271: Type|(filename: PathLike, results: Type_72) -> NoneType
