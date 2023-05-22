@@ -1,4 +1,0 @@
-Model,Mode,Starting Samples,OOD Samples,Metric
-./results/models/ADFA/adfa_normal_addr_99004_99004.json,normal,addr,99004,-0.04760802452057795
-./results/models/ADFA/adfa_normal_addr_99004_49502.json,normal,addr,99004,-0.014642420723077396
-./results/models/ADFA/adfa_normal_addr_99004_1.json,normal,addr,99004,0.0

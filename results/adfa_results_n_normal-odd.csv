@@ -1,0 +1,18 @@
+Model,Mode,Starting Samples,OOD Samples,Metric
+./results/models/ADFA/adfa_normal_addr_72603_290412.json,normal,addr,72603,-0.11534652449186181
+./results/models/ADFA/adfa_normal_addr_99004_99004.json,normal,addr,99004,-0.047774161709407195
+./results/models/ADFA/adfa_normal_addr_125405_125405.json,normal,addr,125405,-0.042070949693121466
+./results/models/ADFA/adfa_normal_addr_118805_118805.json,normal,addr,118805,-0.04140624550975778
+./results/models/ADFA/adfa_normal_addr_72603_72603.json,normal,addr,72603,-0.04101131026790532
+./results/models/ADFA/adfa_normal_addr_99004_49502.json,normal,addr,99004,-0.013150921076032634
+./results/models/ADFA/adfa_normal_addr_118805_59402.json,normal,addr,118805,-0.010852488871260387
+./results/models/ADFA/adfa_normal_addr_72603_217809.json,normal,addr,72603,-0.0027442271455765384
+./results/models/ADFA/adfa_normal_addr_72603_1.json,normal,addr,72603,0.0
+./results/models/ADFA/adfa_normal_addr_66003_1.json,normal,addr,66003,0.0
+./results/models/ADFA/adfa_normal_addr_99004_1.json,normal,addr,99004,0.0
+./results/models/ADFA/adfa_normal_addr_33001_1.json,normal,addr,33001,0.0
+./results/models/ADFA/adfa_normal_addr_118805_1.json,normal,addr,118805,0.0
+./results/models/ADFA/adfa_normal_addr_99004_24751.json,normal,addr,99004,0.005241857043368111
+./results/models/ADFA/adfa_normal_addr_72603_7260.json,normal,addr,72603,0.015387483749823985
+./results/models/ADFA/adfa_normal_addr_72603_145206.json,normal,addr,72603,0.06046562280668534
+./results/models/ADFA/adfa_normal_addr_125405_250810.json,normal,addr,125405,0.08668134901095295

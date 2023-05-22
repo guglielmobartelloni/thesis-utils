@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import warnings
 from utils import (
     preprocess_adfa,
     preprocess_cicids,
@@ -23,11 +23,12 @@ import csv
 # N+AV OOD
 # N+AV+AV OOD (FATTO)
 
+warnings.filterwarnings("ignore")
 
 cicids_dataset = pd.read_csv("./datasets/CICIDS18_Shuffled_Reduced.csv")
 adfa_dataset = pd.read_csv("./datasets/ADFANet_Shuffled_LabelOK.csv")
-N = int(len(adfa_dataset) * 0.75)
-N_ood = int(N * 0.5)
+N = int(len(adfa_dataset) * 0.90)
+N_ood = int(N)
 d_min = 0.25
 softness = 0.0
 
@@ -88,7 +89,7 @@ def testing(models_path="./results/models/CICIDS"):
     # Sort the results
     results = dict(sorted(results.items(), key=lambda x: x[1]))
     # Save the results
-    save_in_csv("./results/adfa_results_n-odd.csv", results)
+    save_in_csv("./results/adfa_results_n_normal-odd.csv", results)
 
 
 training_ADFA()
