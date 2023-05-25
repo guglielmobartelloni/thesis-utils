@@ -1,0 +1,9 @@
+Model,Mode,Starting Samples,OOD Samples,Metric
+./results/models/ADFA/adfa_ood_normal_addr_105604_316812.json,ood,normal,addr,-0.1385939015387678
+./results/models/ADFA/adfa_ood_normal_addr_105604_211208.json,ood,normal,addr,-0.12864364883717277
+./results/models/ADFA/adfa_ood_normal_addr_105604_105604.json,ood,normal,addr,-0.12243528844359117
+./results/models/ADFA/adfa_ood_normal_addr_105604_52802.json,ood,normal,addr,-0.09060991376695574
+./results/models/ADFA/adfa_ood_normal_addr_118805_1.json,ood,normal,addr,0.0
+./results/models/ADFA/adfa_ood_normal_addr_66003_1.json,ood,normal,addr,0.0
+./results/models/ADFA/adfa_ood_normal_addr_39601_1.json,ood,normal,addr,0.0
+./results/models/ADFA/adfa_ood_normal_addr_105604_1.json,ood,normal,addr,0.0

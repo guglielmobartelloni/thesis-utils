@@ -25,10 +25,12 @@ import csv
 
 warnings.filterwarnings("ignore")
 
+type = "ood_av"
+
 cicids_dataset = pd.read_csv("./datasets/CICIDS18_Shuffled_Reduced.csv")
 adfa_dataset = pd.read_csv("./datasets/ADFANet_Shuffled_LabelOK.csv")
-N = int(len(adfa_dataset) * 0.90)
-N_ood = int(N)
+N = int(len(adfa_dataset) * .15)
+N_ood = int(N+N+N+N+N+N)
 d_min = 0.25
 softness = 0.0
 
@@ -37,7 +39,7 @@ normal_samples, attack_samples = preprocess_cicids(cicids_dataset, N)
 
 def training_ADFA():
     ood_samples = generate_ood(
-        pd.concat((normal_samples, attack_samples)), N_ood, d_min, softness
+        normal_samples, N_ood, d_min, softness
     )
 
     merged_samples, labels = merge_data_normal_only_with_ood(
@@ -47,7 +49,7 @@ def training_ADFA():
     # Check if the number of samples are right
     # assert len(merged_samples) == N + N_ood and len(labels) == N + N_ood
 
-    model_path = f"./results/models/ADFA/adfa_normal_addr_{N}_{N_ood}.json"
+    model_path = f"./results/models/ADFA/adfa_{type}_addr_{N}_{N_ood}.json"
     print("Training model...")
     print(train_and_save_model(merged_samples, labels, 0.5, model_path))
     print(f"Model saved in {model_path}")
@@ -89,7 +91,7 @@ def testing(models_path="./results/models/CICIDS"):
     # Sort the results
     results = dict(sorted(results.items(), key=lambda x: x[1]))
     # Save the results
-    save_in_csv("./results/adfa_results_n_normal-odd.csv", results)
+    save_in_csv(f"./results/adfa_results_n_{type}-odd.csv", results)
 
 
 training_ADFA()

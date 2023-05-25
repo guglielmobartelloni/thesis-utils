@@ -1,0 +1,23 @@
+Model,Mode,Starting Samples,OOD Samples,Metric
+./results/models/ADFA/adfa_ood_av_addr_105604_316812.json,ood,av,addr,-0.1366861264168027
+./results/models/ADFA/adfa_ood_av_addr_19800_99000.json,ood,av,addr,-0.13627456732312626
+./results/models/ADFA/adfa_ood_av_addr_19800_118800.json,ood,av,addr,-0.13453789852282144
+./results/models/ADFA/adfa_ood_av_addr_105604_211208.json,ood,av,addr,-0.13232977310321511
+./results/models/ADFA/adfa_ood_av_addr_33001_99003.json,ood,av,addr,-0.12841151610043575
+./results/models/ADFA/adfa_ood_av_addr_19800_59400.json,ood,av,addr,-0.12832518474743002
+./results/models/ADFA/adfa_ood_av_addr_66003_198009.json,ood,av,addr,-0.1281025284484729
+./results/models/ADFA/adfa_ood_av_addr_66003_132006.json,ood,av,addr,-0.12508104274850695
+./results/models/ADFA/adfa_ood_av_addr_66003_66003.json,ood,av,addr,-0.12363212243339035
+./results/models/ADFA/adfa_ood_av_addr_19800_39600.json,ood,av,addr,-0.11977017291329947
+./results/models/ADFA/adfa_ood_av_addr_19800_79200.json,ood,av,addr,-0.11868663831736256
+./results/models/ADFA/adfa_ood_av_addr_19800_19800.json,ood,av,addr,-0.11521332033558632
+./results/models/ADFA/adfa_ood_av_addr_33001_66002.json,ood,av,addr,-0.11052922368304963
+./results/models/ADFA/adfa_ood_av_addr_19800_9900.json,ood,av,addr,-0.1089520953975652
+./results/models/ADFA/adfa_ood_av_addr_105604_105604.json,ood,av,addr,-0.1088188973077133
+./results/models/ADFA/adfa_ood_av_addr_33001_33001.json,ood,av,addr,-0.10037146284939649
+./results/models/ADFA/adfa_ood_av_addr_33001_16500.json,ood,av,addr,-0.08129794515959467
+./results/models/ADFA/adfa_ood_av_addr_105604_52802.json,ood,av,addr,-0.07511330912980062
+./results/models/ADFA/adfa_ood_av_addr_66003_1.json,ood,av,addr,0.0
+./results/models/ADFA/adfa_ood_av_addr_26401_1.json,ood,av,addr,0.0
+./results/models/ADFA/adfa_ood_av_addr_52802_1.json,ood,av,addr,0.0
+./results/models/ADFA/adfa_ood_av_addr_118805_1.json,ood,av,addr,0.0
