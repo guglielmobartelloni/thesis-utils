@@ -25,22 +25,20 @@ import csv
 
 warnings.filterwarnings("ignore")
 
-type = "ood_av"
+type = "complete_ood"
 
 cicids_dataset = pd.read_csv("./datasets/CICIDS18_Shuffled_Reduced.csv")
 adfa_dataset = pd.read_csv("./datasets/ADFANet_Shuffled_LabelOK.csv")
-N = int(len(adfa_dataset) * .15)
-N_ood = int(N+N+N+N+N+N)
+N = int(len(adfa_dataset) * 0.15)
+N_ood = int(1)
 d_min = 0.25
 softness = 0.0
 
-normal_samples, attack_samples = preprocess_cicids(cicids_dataset, N)
+normal_samples, attack_samples = preprocess_adfa(adfa_dataset, N)
 
 
 def training_ADFA():
-    ood_samples = generate_ood(
-        normal_samples, N_ood, d_min, softness
-    )
+    ood_samples = generate_ood(normal_samples, N_ood, d_min, softness)
 
     merged_samples, labels = merge_data_normal_only_with_ood(
         normal_samples, ood_samples
@@ -60,14 +58,14 @@ def training_CICIDS():
         pd.concat((normal_samples, attack_samples)), N_ood, d_min, softness
     )
 
-    merged_samples, labels = merge_data_with_ood(
-        normal_samples, attack_samples, ood_samples
+    merged_samples, labels = merge_data_normal_only_with_ood(
+        normal_samples, ood_samples
     )
 
     # Check if the number of samples are right
-    assert len(merged_samples) == N + N_ood and len(labels) == N + N_ood
+    # assert len(merged_samples) == N + N_ood and len(labels) == N + N_ood
 
-    model_path = f"./results/models/CICIDS/cicids_complete_{N}_{N_ood}.json"
+    model_path = f"./results/models/CICIDS/cicids_{type}_{N}_{N_ood}.json"
     print("Training model...")
     print(train_and_save_model(merged_samples, labels, 0.5, model_path))
     print(f"Model saved in {model_path}")
@@ -96,5 +94,5 @@ def testing(models_path="./results/models/CICIDS"):
 
 training_ADFA()
 # training_CICIDS()
-models_path = "./results/models/ADFA/"
+models_path = "./results/models/CICIDS/"
 testing(models_path)
