@@ -109,7 +109,7 @@ def train_and_save_model(data, labels, test_size, model_path):
     encoder = LabelEncoder()
     y = encoder.fit_transform(labels.reshape(-1, 1))
     X = data
-
+    
     # Separate the data
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=123
